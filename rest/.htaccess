@@ -1,0 +1,6 @@
+#######
+# Allow PHP/HTML pages to load without the filename extension
+######
+RewriteEngine On # Turn on the rewriting engine
+RewriteRule ^sales/plans/?$ sales.php?cmd=plans [NC,L]
+RewriteRule ^sales/payment/?$ sales.php?cmd=payment [NC,L]
