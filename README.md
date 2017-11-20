@@ -9,3 +9,13 @@ Após instalado os servidores e configurado corretamente o banco de dados, basta
   - ^/sales/plans : Para obter o json dos pagamentos com método GET.
   
   Obs: Nenhum campo da compra é calculado pelo back-end, ou seja todos os campos devem ser enviados no método POST.
+
+# FrontEnd Project
+
+ Ouve algumas modificações no banco de dados, então para utilizar esse projeto, deve-se rodar o script load_plans novamente. Os caminhos do paymente e plans tem que ser exatamente:
+    -localhost/rest/sales/payment
+    -localhost/rest/sales/plans
+    
+ Os caminhos das novas implementações são:
+  -localhost/frontEnd/pagamento.php
+  -localhost/frontEnd/produtos.php
