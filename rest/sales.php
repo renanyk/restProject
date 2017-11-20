@@ -4,38 +4,47 @@
 require("connect.php");
 
 function error_message($message){
-    echo $message;
+    $response = array(
+        'status' => '0',
+        'msg' => $message
+    );
+    echo json_encode($response);
     exit();
 }
 function insert_product()
 	{
 		global $connection;
-        $transaction_id = (isset($_POST['transaction_id']))&&!empty($_POST['transaction_id'])? $_POST['transaction_id'] : error_message("transaction_id not defined");
-        $price = (isset($_POST['price']))&&!empty($_POST['price'])? $_POST['price'] : error_message("price not defined");
-        $discount = (isset($_POST['discount']))&&!empty($_POST['discount'])? $_POST['discount'] : error_message("discount not defined");
-        $product_price = (isset($_POST['product_price']))&&!empty($_POST['product_price'])? $_POST['product_price'] : error_message("product_price not defined");
-        $payment_type = (isset($_POST['payment_type']))&&!empty($_POST['payment_type'])? $_POST['payment_type'] : error_message("payment_type not defined");
-        $payment_date = (isset($_POST['payment_date']))&&!empty($_POST['payment_date'])? $_POST['payment_date'] : error_message("payment_date not defined");
-        $product = (isset($_POST['product']))&&!empty($_POST['product'])? $_POST['product'] : error_message("product not defined");
+        $transaction_id = (isset($_POST['transaction_id']))&&!empty($_POST['transaction_id'])? $_POST['transaction_id'] : error_message("Transaction ID not defined");
+        $price = (isset($_POST['price']))&&!empty($_POST['price'])? $_POST['price'] : error_message("Price not defined");
+        $discount = (isset($_POST['discount']))&&!empty($_POST['discount'])? $_POST['discount'] : error_message("Discount not defined");
+        $product_price = (isset($_POST['product_price']))&&!empty($_POST['product_price'])? $_POST['product_price'] : error_message("Product price not defined");
+        $payment_type = (isset($_POST['payment_type']))&&!empty($_POST['payment_type'])? $_POST['payment_type'] : error_message("Payment type not defined");
+        $payment_date = (isset($_POST['payment_date']))&&!empty($_POST['payment_date'])? $_POST['payment_date'] : error_message("Payment date not defined");
+        $product = (isset($_POST['product']))&&!empty($_POST['product'])? $_POST['product'] : error_message("Product not defined");
         
-        if($discount>50)error_message("discount must be less than 50");
+        if($discount>50)error_message("Discount must be less than 50");
     
         $productNames=array('gold_plan','platinum_plan','super_premium_plan');
-        if(!in_array($product,$productNames))error_message("product name not found");
+        if(!in_array($product,$productNames))error_message("Product name not found");
     
         $query="INSERT INTO payment SET transaction_id='{$transaction_id}', price={$price}, discount={$discount}, product_price='{$product_price}', payment_type='{$payment_type}',payment_date='{$payment_date}',product='{$product}'";
   
 		if(mysqli_query($connection, $query))
 		{
-			echo 'Product Added Successfully.';
-		}
+
+            $response = array(
+                        'status' => '1',
+                        'msg' => 'Product Added Successfully'
+                        );
+            echo json_encode($response); 
+		} 
+		
 		else
 		{	
-			echo 'Product Addition Failed.';
-		}  
-
+			error_message('Product Addition Failed');
+ 
 	}
-    
+}
 //*********************************************************//
 function list_product(){
     global $connection;
@@ -64,21 +73,21 @@ function list_product(){
         
         case 'POST': 
             if($cmd !="payment")
-            {   echo("Method Not Allowed for payment");
+            {   error_message("Method Not Allowed for payment");
                 break;
             }
 			insert_product();
 			break;
         case 'GET':
             if($cmd !="plans")
-            {   echo("Method Not Allowed for plans");
+            {   error_message("Method Not Allowed for plans");
                 break;
             }
 			list_product();
 			break;
 		default:
 			// Invalid Request Method
-			echo("Method Not Allowed");
+			error_message("Method Not Allowed");
 			break;
 	}
     ?>
