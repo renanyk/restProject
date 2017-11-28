@@ -12,7 +12,7 @@ Após instalado os servidores e configurado corretamente o banco de dados, basta
 
 # FrontEnd Project
 
- Ouve algumas modificações no banco de dados, então para utilizar esse projeto, deve-se rodar o script load_plans novamente. Os caminhos do paymente e plans tem que ser exatamente:
+ Houve algumas modificações no banco de dados, então para utilizar esse projeto, deve-se rodar o script load_plans novamente. Os caminhos do paymente e plans tem que ser exatamente:
     -localhost/rest/sales/payment
     -localhost/rest/sales/plans
     
